@@ -1,16 +1,18 @@
-const mongoose = require("mongoose");
+import mongoose from 'mongoose'
+import {app} from './src/app'
 
-const app = require('./app');
 
 const {DB_HOST, PORT = 3001} = process.env;
 
-mongoose.connect(DB_HOST)
+mongoose.set('strictQuery', true);
+
+mongoose.connect(DB_HOST as string)
   .then(()=> {
     app.listen(PORT, () => {
         console.log("Database connection successful");
       });
   })
-  .catch(error => {
+  .catch((error:Error) => {
     console.log(error.message);
     process.exit(1);
   })
