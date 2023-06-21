@@ -20,7 +20,7 @@ export const HttpError = (status:number, message = errorMessageList[status]) => 
     return error;
 }
 
-export const errorHandler = (err:ErrorWithStatus, req:Request, res:Response, next:NextFunction) => {
+export const errorHandler = (err:any, req:Request, res:Response, next:NextFunction) => {
     console.log(err)
     if (err.status) {
       return res

@@ -12,21 +12,26 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.register = void 0;
+exports.login = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const utils_1 = require("../../utils");
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const models_1 = require("../../models");
-const register = (username, email, password) => __awaiter(void 0, void 0, void 0, function* () {
+const login = (email, password) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield models_1.User.findOne({ email });
-    if (user) {
-        throw (0, utils_1.HttpError)(409, "Email already in use.");
+    if (!user) {
+        throw (0, utils_1.HttpError)(401, "Email or password invalid");
     }
-    const hashPassword = yield bcrypt_1.default.hash(password, 10);
-    const { username: name, email: mail } = yield models_1.User.create({
-        username,
-        email,
-        password: hashPassword,
+    if (!(yield bcrypt_1.default.compare(password, user.password))) {
+        throw (0, utils_1.HttpError)(401, "Email or password invalid");
+    }
+    const payload = {
+        id: user._id,
+    };
+    const token = jsonwebtoken_1.default.sign(payload, process.env.SECRET_KEY, {
+        expiresIn: "23h",
     });
-    return { username: name, email: mail };
+    yield models_1.User.findByIdAndUpdate(user._id, { token });
+    return { token, user };
 });
-exports.register = register;
+exports.login = login;

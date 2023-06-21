@@ -6,8 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const app_1 = require("./src/app");
 const { DB_HOST, PORT = 3001 } = process.env;
-mongoose_1.default.set('strictQuery', true);
-mongoose_1.default.connect(DB_HOST)
+mongoose_1.default.set("strictQuery", true);
+mongoose_1.default
+    .connect(DB_HOST)
     .then(() => {
     app_1.app.listen(PORT, () => {
         console.log("Database connection successful");

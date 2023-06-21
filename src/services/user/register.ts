@@ -1,11 +1,25 @@
-import bcrypt from 'bcrypt'
-import { User } from '../../models/userSchema'
+import bcrypt from "bcrypt";
+import { HttpError } from "../../utils";
+import { User } from "../../models";
 
-export const register = async (username:string, email:string , password:string) => {
-    
-    const hashPassword = bcrypt.hash(password, 10)
+export const register = async (
+  username: string,
+  email: string,
+  password: string
+) => {
+  const user = await User.findOne({ email });
 
-   const user =  await User.create({username, email, hashPassword})
+  if (user) {
+    throw HttpError(409, "Email already in use.");
+  }
 
-   console.log(user)
-}
+  const hashPassword = await bcrypt.hash(password, 10);
+
+  const { username: name, email: mail } = await User.create({
+    username,
+    email,
+    password: hashPassword,
+  });
+
+  return { username: name, email: mail };
+};
