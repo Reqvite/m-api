@@ -1,8 +1,5 @@
-import Joi from "joi";
 import { Schema, model } from "mongoose";
 import { IUser } from "./types/user";
-
-const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 const userSchema = new Schema<IUser>(
   {
@@ -21,21 +18,5 @@ const userSchema = new Schema<IUser>(
   },
   { versionKey: false, timestamps: true }
 );
-
-const registerSchema = Joi.object({
-  username: Joi.string().required(),
-  email: Joi.string().pattern(emailRegexp).required(),
-  password: Joi.string().min(6).required(),
-});
-
-const loginSchema = Joi.object({
-  email: Joi.string().pattern(emailRegexp).required(),
-  password: Joi.string().min(6).required(),
-});
-
-export const userValidationSchema = {
-  registerSchema,
-  loginSchema,
-};
 
 export const User = model<IUser>("User", userSchema);

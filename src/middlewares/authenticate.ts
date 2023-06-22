@@ -1,11 +1,14 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, RequestHandler, Response } from "express";
 import { HttpError } from "../utils";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { IUser, User } from "../models";
-import { RequestWithUser } from "../shared/types/reqWithUser";
+
+export interface RequestWithUser extends Request {
+  user?: IUser;
+}
 
 export const authenticate = async (
-  req: any,
+  req: RequestWithUser,
   res: Response,
   next: NextFunction
 ) => {

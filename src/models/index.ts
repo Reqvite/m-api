@@ -1,2 +1,3 @@
 export { IUser } from "./user/types/user";
-export { User, userValidationSchema } from "./user/userSchema";
+export { User } from "./user/userSchema";
+export { userValidationSchema } from "./user/schemas/schemas";

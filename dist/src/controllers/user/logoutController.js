@@ -9,19 +9,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.loginController = void 0;
-const user_1 = require("../../services/user");
-const loginController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { email, password } = req.body;
-    const { token, user } = yield (0, user_1.login)(email, password);
-    res.status(200).json({
-        status: "OK",
-        code: 200,
-        token,
-        user: {
-            username: user.username,
-            email: user.email,
-        },
+exports.logoutController = void 0;
+const models_1 = require("../../models");
+const logoutController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    yield models_1.User.findByIdAndUpdate((_a = req === null || req === void 0 ? void 0 : req.user) === null || _a === void 0 ? void 0 : _a._id, {
+        $set: { token: null },
     });
+    res.status(204).json({ status: "Logout success", code: 204 });
 });
-exports.loginController = loginController;
+exports.logoutController = logoutController;

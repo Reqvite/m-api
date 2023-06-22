@@ -1,20 +1,22 @@
 import express from "express";
-import { ctrl } from "../../controllers/user";
+import { authController } from "../../controllers/user";
 import { middlewares } from "../../middlewares";
 import { userValidationSchema } from "../../models";
 
 export const router = express.Router();
 
-router.get("/current", middlewares.authenticate, ctrl.currentUser);
+router.get("/current", middlewares.authenticate, authController.currentUser);
 
 router.post(
   "/register",
   middlewares.validateBody(userValidationSchema.registerSchema),
-  ctrl.register
+  authController.register
 );
 
 router.post(
   "/login",
   middlewares.validateBody(userValidationSchema.loginSchema),
-  ctrl.login
+  authController.login
 );
+
+router.post("/logout", middlewares.authenticate, authController.logout);

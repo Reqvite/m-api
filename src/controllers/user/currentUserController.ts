@@ -1,6 +1,8 @@
 import { Response } from "express";
-import { RequestWithUser } from "../../shared/types/reqWithUser";
+import { RequestWithUser } from "../../middlewares/authenticate";
 
 export const currentUserController = (req: RequestWithUser, res: Response) => {
-  console.log(1);
+  const { username, email } = req.user!;
+
+  res.status(200).json({ status: "OK", code: 200, user: { username, email } });
 };

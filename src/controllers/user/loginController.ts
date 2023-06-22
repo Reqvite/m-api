@@ -7,6 +7,8 @@ export const loginController = async (req: Request, res: Response) => {
   const { token, user } = await login(email, password);
 
   res.status(200).json({
+    status: "OK",
+    code: 200,
     token,
     user: {
       username: user.username,
