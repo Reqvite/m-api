@@ -6,11 +6,11 @@ import { User } from "../../models";
 export const login = async (email: string, password: string) => {
   const user = await User.findOne({ email });
   if (!user) {
-    throw HttpError(401, "Email or password invalid");
+    throw HttpError(403, "Email or password invalid");
   }
 
   if (!(await bcrypt.compare(password, user.password))) {
-    throw HttpError(401, "Email or password invalid");
+    throw HttpError(403, "Email or password invalid");
   }
 
   const payload = {
