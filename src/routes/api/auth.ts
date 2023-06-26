@@ -5,18 +5,20 @@ import { userValidationSchema } from "../../models";
 
 export const router = express.Router();
 
-router.get("/current", middlewares.authenticate, authController.currentUser);
 
 router.post(
   "/register",
   middlewares.validateBody(userValidationSchema.registerSchema),
   authController.register
 );
-
 router.post(
   "/login",
   middlewares.validateBody(userValidationSchema.loginSchema),
   authController.login
 );
 
+router.get("/current", middlewares.authenticate, authController.currentUser);
 router.post("/logout", middlewares.authenticate, authController.logout);
+
+
+

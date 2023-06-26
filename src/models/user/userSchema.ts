@@ -10,7 +10,7 @@ const userSchema = new Schema<IUser>(
       type: String,
       default: null,
     },
-    avatar: String,
+    avatar: {type:String, default: "https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg"},
     watchingList: { type: Array, default: [] },
     willWatch: { type: Array, default: [] },
     stoppedWatching: { type: Array, default: [] },

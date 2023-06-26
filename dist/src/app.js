@@ -18,4 +18,5 @@ exports.app.use((0, cors_1.default)());
 exports.app.use(express_1.default.json());
 exports.app.use(express_1.default.static("public"));
 exports.app.use("/api/auth", api_1.authRouter);
+exports.app.use("/api/user", api_1.userProfileRouter);
 exports.app.use(utils_1.errorHandler);

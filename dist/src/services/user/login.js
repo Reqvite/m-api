@@ -20,10 +20,10 @@ const models_1 = require("../../models");
 const login = (email, password) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield models_1.User.findOne({ email });
     if (!user) {
-        throw (0, utils_1.HttpError)(401, "Email or password invalid");
+        throw (0, utils_1.HttpError)(403, "Email or password invalid");
     }
     if (!(yield bcrypt_1.default.compare(password, user.password))) {
-        throw (0, utils_1.HttpError)(401, "Email or password invalid");
+        throw (0, utils_1.HttpError)(403, "Email or password invalid");
     }
     const payload = {
         id: user._id,

@@ -15,7 +15,12 @@ const loginSchema = joi_1.default.object({
     email: joi_1.default.string().pattern(emailRegexp).required(),
     password: joi_1.default.string().min(6).required(),
 });
+const updateUserSchema = joi_1.default.object({
+    username: joi_1.default.string().required(),
+    email: joi_1.default.string().pattern(emailRegexp).required(),
+});
 exports.userValidationSchema = {
     registerSchema,
     loginSchema,
+    updateUserSchema
 };

@@ -13,7 +13,13 @@ const loginSchema = Joi.object({
   password: Joi.string().min(6).required(),
 });
 
+const updateUserSchema = Joi.object({
+  username: Joi.string().required(),
+  email: Joi.string().pattern(emailRegexp).required(),
+});
+
 export const userValidationSchema = {
   registerSchema,
   loginSchema,
+  updateUserSchema
 };
